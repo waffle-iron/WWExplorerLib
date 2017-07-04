@@ -1,2 +1,2 @@
-# worldwindexplorer
+# WorldWindExplorer
 WorldWind Explorer
