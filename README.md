@@ -1,2 +1,2 @@
-# WorldWindExplorer
-WorldWind Explorer
+# WWExplorerLib
+WorldWind Explorer Library
