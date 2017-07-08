@@ -1,8 +1,33 @@
 {
-    "name": "JsLibrary",
-    "version": "1.0.0",
-    "keywords": ["util", "functional", "server", "client", "browser"],
-    "author": "Bruce Schubert",
-    "contributors": [],
-    "dependencies": {}
+  "name": "WWExplorerLib",
+  "version": "0.1.0",
+  "keywords": [
+    "nasa",
+    "worldwind",
+    "earth",
+    "globe",
+    "3d",
+    "browser",
+    "viewer",
+    "maps",
+    "imagery",
+    "terrain"
+  ],
+  "author": "Bruce Schubert",
+  "contributors": [],
+  "dependencies": {},
+  "description": "WorldWind Explorer Library",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WorldWindEarth/WWExplorerLib.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WorldWindEarth/WWExplorerLib/issues"
+  },
+  "homepage": "https://worldwindearth.github.io"
 }
