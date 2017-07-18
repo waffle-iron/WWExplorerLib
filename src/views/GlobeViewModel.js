@@ -9,14 +9,12 @@ define(['knockout', 'jquery', 'jqueryui',
         'model/markers/BasicMarker',
         'model/Explorer',
         'model/util/WmtUtil',
-        'model/weather/WeatherScout',
         'worldwind'
     ],
     function (ko, $, jqueryui,
               BasicMarker,
               explorer,
               util,
-              WeatherScout,
               ww) {
         "use strict";
         /**
