@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--
+The MIT License
+
+Copyright 2017 Bruce Schubert.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+
+        <!-- Bootstrap: The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>WWExplorerLib</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- JQuery UI provides some UI elements (e.g, a slider) -->
+        <link rel="stylesheet" type="text/css" href="css/libs/jquery-ui/v1.11.4/jquery-ui.min.css"/>
+        <!-- Bootstrap's 'Slate' theme provides the main styling -->
+        <link rel="stylesheet" type="text/css" href="css/libs/bootstrap/v3.3.6/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/libs/bootstrap/v3.3.6/bootstrap-slate.min.css"/>
+        <!-- JQuery-Growl plugin for growl style messages-->
+        <link rel="stylesheet" type="text/css" href="css/libs/jquery-plugins/jquery.growl.css"/>
+        <!-- Font Awesome provides icons -->
+        <link rel="stylesheet" type="text/css" href="css/libs/fa/v4.6.2/font-awesome.min.css"/>
+        <!-- Custom application specific styling -->
+        <link rel="stylesheet" type="text/css" href="css/override.css"/>
+
+    </head>
+    <body>
+        <div id="globe" class="split split-vertical" style="height: 100%;">
+            <!--Set canvas' tabindex so keydown events can be captured by the KeyboardController -->
+            <canvas id="canvasOne" tabindex='1'
+                    data-bind="style: { cursor: dropIsArmed() ? 'crosshair' : 'default' }">
+                Try Chrome or FireFox.
+            </canvas>
+            <!--
+            Globe Buttons
+            -->
+            <div class="non-interactive" style="position: absolute; top: 0; right: 0;">
+                <div id="globe-buttons" class="interactive"
+                     style='float: right; margin-top: 30px; max-width: 100px'>
+                    <span class="btn-group" style="float: left">
+                        <!-- Add Marker button and palette -->
+                        <button type="button"
+                                class="btn btn-primary btn-sm globe-button"
+                                style="padding-top: 0; padding-bottom: 0; padding-right: 0"
+                                data-bind="click: armDropMarker">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            <img width="28px" height="28px;"
+                                 data-bind="attr:{src: selectedMarkerTemplate().imageSource}"/>
+                        </button>
+                        <!-- Marker palette dropdown button-->
+                        <button type="button"
+                                class="btn btn-primary btn-sm globe-button dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-haspopup="true">
+                            <span class="caret"></span>
+                            <span class="sr-only">Markers Dropdown</span>
+                        </button>
+                        <!-- Dropdown list bound the 'markerPalette' observableArray -->
+                        <ul id="marker-palette"
+                            class="dropdown-menu"
+                            style="left: initial; right: 0; min-width: 30px"
+                            data-bind="foreach: markerPalette">
+                            <li data-bind="click: $parent.selectedMarkerTemplate">
+                                <a><img width="28px" height="28px;"
+                                        data-bind="attr:{src: $data.imageSource}"/></a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+            <!--
+            Time Controls
+            -->
+            <div class="col-xs-12 non-interactive">
+                <div class="row">
+                    <!--Create a shallow div along the bottom edge of the globe-->
+                    <div class="interactive" style="position: absolute; bottom: 0; width: 100%">
+
+                        <!--Date/Time Buttons-->
+                        <div id="timeControlButtons"
+                             style="width: 166px; margin-right: auto; margin-left: auto">
+                            <div class="btn-group btn-group-sm interactive" role="group"
+                                 style="float:bottom"
+                                 aria-label="time controls">
+                                <button id="time-fast-backward" type="button"
+                                        class="btn btn-default repeatButton">
+                                    <span class="glyphicon glyphicon-fast-backward"
+                                          aria-hidden="true"></span>
+                                </button>
+                                <button id="time-step-backward" type="button"
+                                        class="btn btn-default repeatButton">
+                                    <span class="glyphicon glyphicon-step-backward"
+                                          aria-hidden="true"></span>
+                                </button>
+                                <button id="time-reset" type="button" class="btn btn-default"
+                                        data-bind="click: onTimeReset, css:{active: autoUpdateTime}">
+                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                </button>
+                                <button id="time-step-forward" type="button"
+                                        class="btn btn-default repeatButton">
+                                    <span class="glyphicon glyphicon-step-forward"
+                                          aria-hidden="true"></span>
+                                </button>
+                                <button id="time-fast-forward" type="button"
+                                        class="btn btn-default repeatButton">
+                                    <span class="glyphicon glyphicon-fast-forward"
+                                          aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <!--Date/Time Slider-->
+                        <div id="timeControlSlider"
+                             style="width: 166px; margin-right: auto; margin-left: auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RequireJS AMD configuration file -->
+        <script data-main="main" src="libs/require/require-debug.js"></script>
+
+    </body>
+</html>
