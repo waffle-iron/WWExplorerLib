@@ -15,7 +15,13 @@
   ],
   "author": "Bruce Schubert",
   "contributors": [],
-  "dependencies": {},
+  "dependencies": 
+  { "knockout" : "3.4.x"
+  , "jquery" : "2.1.x"
+  , "jquery-ui" : "1.12.x"
+  , "jquery.growl" : "1.3.x"
+  , "moment" : "2.14.1"
+  },            
   "description": "WorldWind Explorer Library",
   "main": "Gruntfile.js",
   "scripts": {
