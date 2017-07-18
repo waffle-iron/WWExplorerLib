@@ -11,8 +11,8 @@
  * @param {type} $
  * @returns {LayersViewModel}
  */
-define(['knockout', 'jquery', 'jqueryui', 'bootstrap', 'model/Constants'],
-        function (ko, $, jqueryui, boostrap, constants) {
+define(['knockout', 'jquery', 'jqueryui', 'model/Constants'],
+        function (ko, $, jqueryui, constants) {
 
             /**
              * The view model for the Layers panel.
